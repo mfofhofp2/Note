@@ -89,7 +89,7 @@ $$d = \frac{\Pi_3(x)}{\Pi} = \frac{v}{H-K}$$
 
 ## Combined result
 
-$$\boxed{\max\left\{0,\; s-\frac{K}{R}\right\} \;\le\; v \;\le\; \frac{(Rs-L)(H-K)}{R(H-L)}}$$
+$$\boxed{\max\left\{0,\, s-\frac{K}{R}\right\} \;\le\; v \;\le\; \frac{(Rs-L)(H-K)}{R(H-L)}}$$
 
 (This assumes $R>0$ and $L<K<H$, which are needed for the denominators to be positive and the ordering to make sense.)
 
