@@ -1,3 +1,121 @@
+# Bond, Stock, Option — Cleaned-Up Derivation (Keith's ordering)
+
+Uses the same reference-point ordering as the original note: $\Pi = O\,X(L)\,X(H)\,X(K)$.
+
+## Setup
+
+$$x = O + \rho + s\sigma + v\kappa \qquad X(\omega) = O + R\rho + \omega\sigma + \max(\omega-K,0)\kappa$$
+
+With $L<K<H$:
+
+$$X(L) = O+R\rho+L\sigma \qquad X(K)=O+R\rho+K\sigma \qquad X(H)=O+R\rho+H\sigma+(H-K)\kappa$$
+
+We write $x$ as a combination of $O, X(L), X(H), X(K)$. Arbitrage-free requires the coefficients of $X(L), X(H), X(K)$ to be non-negative (coefficient on $O$ is unconstrained).
+
+Convention: since every factor carries a copy of $O$ and $O\wedge O=0$, once the leading $O$ is factored out we only keep the non-$O$ (direction) part of each subsequent factor.
+
+Reduction identities used throughout (all other 3-fold wedge combinations vanish because a vector repeats):
+$$\rho\sigma\kappa=1, \quad \rho\kappa\sigma=-1, \quad \sigma\kappa\rho=+1, \quad \kappa\sigma\rho=-1, \quad \sigma\rho\kappa=-1, \quad \kappa\rho\sigma=+1 \qquad (\text{units of } \rho\sigma\kappa)$$
+
+## Step 1 — Compute $\Pi = O\,X(L)\,X(H)\,X(K)$
+
+$$(R\rho+L\sigma)\wedge(R\rho+H\sigma+(H-K)\kappa) = (RH-LR)\rho\sigma + R(H-K)\rho\kappa + L(H-K)\sigma\kappa$$
+
+Wedge with $(R\rho+K\sigma)$ — only cross terms survive:
+
+$$R(H-K)\rho\kappa\wedge K\sigma = R(H-K)K\,\rho\kappa\sigma = -R(H-K)K\,\rho\sigma\kappa$$
+$$L(H-K)\sigma\kappa\wedge R\rho = L(H-K)R\,\sigma\kappa\rho = +L(H-K)R\,\rho\sigma\kappa$$
+
+Sum:
+$$\Pi = \big[-R(H-K)K + L(H-K)R\big]\,O\rho\sigma\kappa = R(H-K)(L-K)\,O\rho\sigma\kappa$$
+
+**Note the sign**: since $L<K$, $(L-K)<0$, and $(H-K)>0$, $R>0$ — so $\Pi$ itself is **negative**. This matters below: dividing by a negative denominator flips the inequality direction.
+
+## Step 2 — Compute $\Pi_1(x) = O\,x\,X(H)\,X(K)$ (coefficient of $X(L)$)
+
+$$(\rho+s\sigma+v\kappa)\wedge(R\rho+H\sigma+(H-K)\kappa) = (H-sR)\rho\sigma + (H-K-vR)\rho\kappa + (s(H-K)-vH)\sigma\kappa$$
+
+Wedge with $(R\rho+K\sigma)$:
+
+$$(H-K-vR)\rho\kappa\wedge K\sigma = -(H-K-vR)K\,\rho\sigma\kappa$$
+$$(s(H-K)-vH)\sigma\kappa\wedge R\rho = (s(H-K)-vH)R\,\rho\sigma\kappa$$
+
+Sum, then simplify:
+$$\Pi_1(x) = \big[-(H-K-vR)K + (s(H-K)-vH)R\big]\,O\rho\sigma\kappa = (H-K)\big[R(s-v)-K\big]\,O\rho\sigma\kappa$$
+
+Divide by $\Pi = R(H-K)(L-K)\,O\rho\sigma\kappa$:
+
+$$\text{coeff}(X(L)) = \frac{R(s-v)-K}{R(L-K)}$$
+
+**Denominator is negative** ($L<K$). For coeff $\ge0$, numerator must be $\le0$:
+$$R(s-v)-K\le0 \;\;\Longrightarrow\;\; v\ge s-\frac{K}{R}$$
+
+> **Correction vs. the original note**: the original draft concludes $v\le s(H-K)/H$ here. Re-deriving carefully (matching every intermediate expression against the original) gives $v \ge s-K/R$ instead — this is the standard discounted-intrinsic-value lower bound on a call, independent of $L,H$.
+
+## Step 3 — Compute $\Pi_2(x) = O\,X(L)\,x\,X(K)$ (coefficient of $X(H)$)
+
+$$(R\rho+L\sigma)\wedge(\rho+s\sigma+v\kappa) = (Rs-L)\rho\sigma + Rv\,\rho\kappa + Lv\,\sigma\kappa$$
+
+Wedge with $(R\rho+K\sigma)$:
+
+$$Rv\,\rho\kappa\wedge K\sigma = -RvK\,\rho\sigma\kappa \qquad Lv\,\sigma\kappa\wedge R\rho = LvR\,\rho\sigma\kappa$$
+
+Sum:
+$$\Pi_2(x) = (LvR-RvK)\,O\rho\sigma\kappa = vR(L-K)\,O\rho\sigma\kappa$$
+
+Divide by $\Pi = R(H-K)(L-K)\,O\rho\sigma\kappa$ — the $(L-K)$ factor cancels directly (no sign flip needed):
+
+$$\text{coeff}(X(H)) = \frac{v}{H-K} \;\;\ge0 \;\;\Longrightarrow\;\; v\ge0$$
+
+This matches the original note's conclusion ($v\ge0$) — correct.
+
+## Step 4 — Compute $\Pi_3(x) = O\,X(L)\,X(H)\,x$ (coefficient of $X(K)$ — this is the step flagged `TODO: check sign` in the original)
+
+Reuse the intermediate result from Step 1:
+$$(R\rho+L\sigma)\wedge(R\rho+H\sigma+(H-K)\kappa) = (RH-LR)\rho\sigma + R(H-K)\rho\kappa + L(H-K)\sigma\kappa$$
+
+Wedge with $(\rho+s\sigma+v\kappa)$:
+
+$$(RH-LR)\rho\sigma\wedge v\kappa = (RH-LR)v\,\rho\sigma\kappa$$
+$$R(H-K)\rho\kappa\wedge s\sigma = -R(H-K)s\,\rho\sigma\kappa$$
+$$L(H-K)\sigma\kappa\wedge\rho = L(H-K)\,\rho\sigma\kappa$$
+
+Sum:
+$$\Pi_3(x) = \big[R(H-L)v - (H-K)(Rs-L)\big]\,O\rho\sigma\kappa$$
+
+Divide by $\Pi = R(H-K)(L-K)\,O\rho\sigma\kappa$ (**negative denominator**):
+
+$$\text{coeff}(X(K)) = \frac{R(H-L)v-(H-K)(Rs-L)}{R(H-K)(L-K)}$$
+
+For coeff $\ge0$, since denominator is negative, numerator must be $\le0$:
+$$R(H-L)v \le (H-K)(Rs-L) \;\;\Longrightarrow\;\; v \le \frac{(H-K)(Rs-L)}{R(H-L)}$$
+
+> **Correction vs. the original note**: the original draft concludes $v\ge(H-K)(Rs-L)/[R(H-L)]$ — this is the step Keith himself flagged with `TODO: check sign`. The intermediate expression is correct, but dividing by the negative $\Pi$ flips the inequality: the correct direction is $v \le \ldots$, not $v \ge \ldots$. Numerically, with $L=90,K=100,H=110,R=1,s=100$: $(H-K)(Rs-L)/[R(H-L)] = 10\cdot10/20=5$ — matching the original note's arithmetic, but as an **upper** bound, not a lower one.
+
+## Combined result
+
+$$\boxed{\max(0,\ s-K/R) \;\le\; v \;\le\; \frac{(H-K)(Rs-L)}{R(H-L)}}$$
+
+Same conclusion as the independently-derived version using the $O\,X(L)\,X(K)\,X(H)$ ordering (that version's $\Pi$ is the negative of this one's, since it swaps the last two factors — a single transposition, one sign flip — but the final inequalities work out identically once each sign is tracked through consistently).
+
+## Sanity check against known theory
+
+- **Lower bound** $v\ge\max(0,s-K/R)$: the standard model-free no-arbitrage lower bound on a call (discounted intrinsic value). Independent of $L,H$ — a good consistency check, since it must hold in *any* arbitrage-free model, not just this trinomial one.
+- **Upper bound** $v\le(H-K)(Rs-L)/[R(H-L)]$: comes from the specific trinomial structure; reduces to the earlier bond+stock cone-boundary logic at the endpoints.
+- **$v\ge0$**: trivial (a call's payoff is never negative).
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Bond, Stock, Option — Cleaned-Up Derivation
 
 ## Setup
