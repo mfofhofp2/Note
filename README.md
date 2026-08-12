@@ -299,7 +299,7 @@ This is exactly the single-option discounted-intrinsic-value lower bound, reappe
 
 Same style of row reduction (details omitted for brevity — same mechanics as Step 2, with $x$ now in the second slot):
 
-$$c = \frac{(K_2-K_1)(s-L/R) - \big[(K_2-L)v_1-(K_1-L)v_2\big]}{R(K_1-L)(K_2-K_1)}$$
+$$c = \frac{(K_2-K_1)(s-L/R) - \big[(K_2-L)v_1-(K_1-L)v_2\big]}{(K_1-L)(K_2-K_1)}$$
 
 **$c\ge0$**:
 $$(K_2-L)v_1-(K_1-L)v_2 \;\le\; (K_2-K_1)\left(s-\frac{L}{R}\right)$$
